@@ -1,0 +1,15 @@
+#!/bin/bash
+OPS="-Wall -Weffc++ -Wextra -Wsign-conversion -pedantic-errors -std=c++2a"
+LDFLAGS="-Llib -lPolynomial -lMonomial"
+IFLAGS="-Iinclude/"
+
+g++ -c $IFLAGS $OPS -fPIC ./src/Monomial.cpp -o ./bin/Monomial.o &&
+g++ -shared -o ./lib/libMonomial.so ./bin/Monomial.o &&
+
+g++ -c $IFLAGS $OPS -fPIC ./src/Polynomial.cpp -o ./bin/Polynomial.o &&
+g++ -shared -o ./lib/libPolynomial.so ./bin/Polynomial.o &&
+
+g++ ./src/main.cpp -o ./bin/main $IFLAGS $LDFLAGS $OPS &&
+
+echo "RUN this before executing the program: "
+echo "$ export LD_LIBRARY_PATH=$PWD/lib/"
